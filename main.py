@@ -1,7 +1,7 @@
 import streamlit as st
 import pickle
 st.header('Форма диагностики')
-st.subheader('Заполните следующие пункты:')
+st.write('Заполните следующие пункты:')
 age = st.slider('Возраст', 0, 100)
 age_in_days = age * 365
 sex = st.selectbox('Пол', ['м', 'ж'])
@@ -23,4 +23,15 @@ def load():
         return pickle.load(fid)
 model = load()
 y_pr = model.predict_proba([[age, sex, height, weight, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active]])[:,1]
-st.write(y_pr)
+st.subheader('Вероятность сердечнососудистого заболевания:')
+st.write(y_pr.tolist()[0])
+
+if smoke == 1:
+    st.write('Рекомендации:')
+    st.write('Вам следует отказаться от курения')
+if alco == 1:
+    st.write('Рекомендации:')
+    st.write('Вам следует отказаться от употребления алкоголя')
+if active == 0:
+    st.write('Рекомендации:')
+    st.write('Вам следует заняться физической активностью')
