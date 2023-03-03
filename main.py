@@ -25,13 +25,12 @@ model = load()
 y_pr = model.predict_proba([[age, sex, height, weight, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active]])[:,1]
 st.subheader('Вероятность сердечнососудистого заболевания:')
 st.write(y_pr.tolist()[0])
-
+st.write('Рекомендации:')
 if smoke == 1:
-    st.write('Рекомендации:')
     st.write('Вам следует отказаться от курения')
 if alco == 1:
-    st.write('Рекомендации:')
     st.write('Вам следует отказаться от употребления алкоголя')
 if active == 0:
-    st.write('Рекомендации:')
     st.write('Вам следует заняться физической активностью')
+if (active == 1) & (smoke == 0) & (alco == 0):
+    st.write('Отлично! Вы ведете здоровый образ жизни!')
